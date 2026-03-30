@@ -3,236 +3,409 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One Masterpiece a Day</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Art A Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#b8962e;--gold-light:#d4b253;--ink:#1a1208;--ink-mid:#2e2414;
-  --cream:#f7f3ec;--cream-dark:#ede7db;--rust:#8b3a1f;
-  --text:#2a1f0e;--text-mid:#5a4a35;--text-light:#8a7a65;
-  --border:rgba(184,150,46,0.2);
+  --bg:#0e0c0a;--surface:#161310;--card:#1c1814;--border:#2a2420;
+  --text:#e8e0d4;--muted:#6b6058;--soft:#a89880;
+  --gold:#c9a050;--rust:#c0522a;--cream:#f0e8d8;
 }
-body{background:var(--cream);color:var(--text);font-family:'Jost',sans-serif;min-height:100vh}
-.header{background:var(--ink);text-align:center;padding:2.5rem 1.5rem 2rem;position:relative;overflow:hidden}
-.header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(184,150,46,0.15) 0%,transparent 70%)}
-.header-inner{position:relative;z-index:1}
-.eyebrow{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem}
-.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,5vw,2.8rem);font-weight:300;color:var(--cream);letter-spacing:0.06em;margin-bottom:0.5rem}
-.orn{color:var(--gold);letter-spacing:0.6em;font-size:0.7rem;margin:0.4rem 0}
-.sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(247,243,236,0.5);font-size:1rem;font-weight:300}
-.era-nav{background:var(--ink-mid);display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(184,150,46,0.15)}
-.era-nav::-webkit-scrollbar{display:none}
-.era-btn{flex:0 0 auto;border:none;background:none;color:rgba(247,243,236,0.4);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:0.8rem 1rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.25s}
-.era-btn:hover{color:rgba(247,243,236,0.7)}
-.era-btn.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(184,150,46,0.08)}
-.era-btn:disabled{opacity:0.4;cursor:not-allowed}
-.container{max-width:720px;margin:0 auto;padding:2rem 1.2rem 4rem}
-.label-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem}
-.label-row hr{flex:1;border:none;border-top:1px solid var(--border)}
-.label-row span{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.3em;color:var(--text-light);text-transform:uppercase;white-space:nowrap}
-.badge{display:inline-block;background:var(--ink);color:var(--gold);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:0.25rem 0.7rem;margin-bottom:0.9rem}
-.art-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,6vw,2.8rem);font-weight:400;font-style:italic;color:var(--rust);line-height:1.1;margin-bottom:0.4rem}
-.meta{display:flex;flex-wrap:wrap;gap:0.4rem 1.4rem;margin-bottom:1.6rem;padding-bottom:1.4rem;border-bottom:1px solid var(--border)}
-.meta-item{display:flex;align-items:baseline;gap:0.4rem;font-size:0.85rem}
-.meta-label{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold)}
-.meta-val{color:var(--text);font-family:'Jost',sans-serif;font-weight:300}
-.frame-wrap{margin:0 auto 2rem;max-width:500px}
-.frame{border:1px solid var(--border);padding:10px;background:white;box-shadow:0 2px 4px rgba(0,0,0,0.04),0 12px 40px rgba(0,0,0,0.12);position:relative;min-height:280px;display:flex;align-items:center;justify-content:center}
-.frame-corner{position:absolute;color:var(--gold);font-size:10px;opacity:0.5}
-.art-img{width:100%;display:block;max-height:440px;object-fit:contain}
-.img-placeholder{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:3rem;color:var(--text-light)}
-.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;min-height:100vh;overflow-x:hidden}
+
+
+
+header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:rgba(14,12,10,0.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Libre Baskerville',serif;font-size:1.1rem;letter-spacing:0.04em;color:var(--cream)}
+.logo em{color:var(--gold);font-style:italic}
+.hdr-meta{text-align:right}
+.hdr-date{font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase}
+.hdr-count{font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--gold);letter-spacing:0.08em;margin-top:2px}
+
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(40px) brightness(0.15) saturate(0.5);transform:scale(1.1);transition:background-image 1s}
+.hero-content{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;padding:32px 24px 24px;animation:fadeUp 0.6s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+.today-label{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.today-label::before{content:'';width:24px;height:1px;background:var(--gold)}
+
+.hero-frame{width:100%;max-width:460px;margin:0 auto 28px;position:relative}
+.frame-border{position:absolute;inset:-6px;border:1px solid rgba(201,160,80,0.18);pointer-events:none;z-index:3}
+.frame-corner{position:absolute;width:14px;height:14px;border-color:var(--gold);border-style:solid;opacity:0.5}
+.frame-corner.tl{top:-6px;left:-6px;border-width:1px 0 0 1px}
+.frame-corner.tr{top:-6px;right:-6px;border-width:1px 1px 0 0}
+.frame-corner.bl{bottom:-6px;left:-6px;border-width:0 0 1px 1px}
+.frame-corner.br{bottom:-6px;right:-6px;border-width:0 1px 1px 0}
+
+.hero-img-wrap{aspect-ratio:4/3;background:#0a0806;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+.hero-img{width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 0.8s ease;display:block}
+.hero-img.loaded{opacity:1}
+.spinner{position:absolute;width:26px;height:26px;border-radius:50%;border:1px solid rgba(201,160,80,0.12);border-top-color:var(--gold);animation:spin 1s linear infinite}
+.spinner.hidden{display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-.img-credit{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:0.1em;color:var(--text-light);text-align:right;margin-top:0.3rem;opacity:0.5;text-transform:uppercase}
-.section{margin-bottom:1.8rem}
-.section-hd{display:flex;align-items:center;gap:0.8rem;margin-bottom:0.7rem}
-.section-hd span{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
-.section-hd hr{flex:1;border:none;border-top:1px solid var(--border)}
-.section p{font-family:'Libre Baskerville',serif;font-size:0.92rem;line-height:1.9;color:var(--text)}
-.surprise-btn{display:block;margin:2rem auto 0;background:var(--gold);border:none;color:var(--ink);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;padding:0.85rem 2rem;cursor:pointer;transition:background 0.2s;font-weight:500}
-.surprise-btn:hover:not(:disabled){background:var(--gold-light)}
-.surprise-btn:disabled{opacity:0.5;cursor:not-allowed}
-.generating{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:1.5rem;text-align:center}
-.gen-spinner{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
-.gen-label{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-light);font-size:1.1rem}
-.gen-sub{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.6}
-.error-box{text-align:center;padding:3rem 1.5rem}
-.error-box p{font-family:'Libre Baskerville',serif;font-style:italic;color:var(--text-light);margin-bottom:1.2rem}
-.retry-btn{background:none;border:1px solid var(--border);color:var(--text);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:0.7rem 1.3rem;cursor:pointer;transition:all 0.2s}
-.retry-btn:hover{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+
+.hero-era{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--rust);margin-bottom:10px}
+.hero-title{font-family:'Libre Baskerville',serif;font-size:clamp(1.5rem,5vw,2.2rem);font-style:italic;line-height:1.12;color:var(--cream);margin-bottom:5px}
+.hero-artist{font-size:0.9rem;color:var(--soft);font-weight:300;margin-bottom:22px}
+.hero-divider{width:36px;height:1px;background:var(--border);margin-bottom:22px}
+
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.meta-block label{display:block;font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.meta-block span{font-size:0.82rem;color:var(--soft);font-weight:300;line-height:1.4}
+
+.hero-history{font-size:0.9rem;line-height:1.82;color:#8a7860;font-weight:300;margin-bottom:18px}
+.why-block{padding:14px 16px;border-left:2px solid var(--gold);background:rgba(201,160,80,0.04);margin-bottom:28px}
+.why-block h4{font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.why-block p{font-size:0.84rem;line-height:1.7;color:#7a6850;font-style:italic;font-weight:300}
+
+.next-bar{display:flex;align-items:center;gap:12px;padding:14px 16px;margin-top:auto;background:rgba(255,255,255,0.02);border:1px solid var(--border)}
+.next-bar-label{font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+.next-bar-time{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--rust);letter-spacing:0.04em}
+.next-bar-sep{flex:1;height:1px;background:var(--border)}
+.next-bar-hint{font-family:'DM Mono',monospace;font-size:0.48rem;color:var(--muted);letter-spacing:0.08em;text-align:right}
+
+.scroll-cue{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;opacity:0.3;animation:bob 2.2s ease-in-out infinite;cursor:pointer;z-index:3}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+.scroll-cue span{font-family:'DM Mono',monospace;font-size:0.43rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--soft)}
+.scroll-cue svg{width:14px;height:14px;stroke:var(--soft);fill:none;stroke-width:1.5}
+
+.collection{padding-bottom:60px;background:var(--bg)}
+.era-tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:57px;z-index:40;padding:0 8px}
+.era-tabs::-webkit-scrollbar{display:none}
+.era-tab{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;padding:13px 14px;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;gap:5px}
+.era-tab:hover{color:var(--text)}
+.era-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-pill{font-size:0.44rem;padding:1px 5px;border-radius:8px;background:var(--border);color:var(--muted);transition:all 0.2s}
+.era-tab.active .tab-pill{background:var(--gold);color:var(--bg)}
+
+.collection-header{padding:28px 24px 18px;display:flex;align-items:baseline;justify-content:space-between}
+.collection-title{font-family:'Libre Baskerville',serif;font-size:1.05rem;font-style:italic;color:var(--cream)}
+.collection-sub{font-family:'DM Mono',monospace;font-size:0.48rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+
+.empty-state{padding:52px 24px;text-align:center}
+.empty-state p{font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;line-height:2.4}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:820px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+.card{background:var(--card);cursor:pointer;position:relative;overflow:hidden;transition:background 0.2s}
+.card:hover{background:#232018}
+.card:hover .card-img{transform:scale(1.05)}
+.card-thumb{aspect-ratio:4/3;overflow:hidden;background:#0a0806;display:flex;align-items:center;justify-content:center;position:relative}
+.card-img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.5s ease,transform 0.4s ease}
+.card-img.loaded{opacity:1}
+.card-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.card-placeholder svg{opacity:0.07;width:26px;height:26px}
+.badge-starter{position:absolute;top:7px;left:7px;font-family:'DM Mono',monospace;font-size:0.4rem;letter-spacing:0.1em;text-transform:uppercase;padding:2px 6px;background:rgba(201,160,80,0.12);border:1px solid rgba(201,160,80,0.25);color:var(--gold)}
+.badge-new{position:absolute;top:7px;left:7px;font-family:'DM Mono',monospace;font-size:0.4rem;letter-spacing:0.1em;text-transform:uppercase;padding:2px 6px;background:rgba(192,82,42,0.15);border:1px solid rgba(192,82,42,0.35);color:var(--rust)}
+.card-info{padding:11px 13px 13px}
+.card-era{font-family:'DM Mono',monospace;font-size:0.42rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);margin-bottom:3px}
+.card-title{font-family:'Libre Baskerville',serif;font-size:0.82rem;font-style:italic;line-height:1.25;color:var(--cream);margin-bottom:2px}
+.card-artist{font-size:0.7rem;color:var(--muted);font-weight:300}
+
+.overlay{position:fixed;inset:0;background:rgba(6,4,2,0.9);z-index:200;display:none;align-items:flex-end;justify-content:center}
+@media(min-width:600px){.overlay{align-items:center;padding:24px}}
+.overlay.open{display:flex}
+.modal{background:var(--surface);width:100%;max-width:620px;max-height:92svh;overflow-y:auto;position:relative;border-top:1px solid var(--border);animation:slideUp 0.28s ease both}
+@media(min-width:600px){.modal{border:1px solid var(--border);animation:fadeScale 0.22s ease both}}
+@keyframes slideUp{from{transform:translateY(36px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeScale{from{transform:scale(0.97);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-img-wrap{background:#080604;display:flex;align-items:center;justify-content:center;min-height:180px}
+.modal-img{max-width:100%;max-height:300px;object-fit:contain;display:block;opacity:0;transition:opacity 0.5s}
+.modal-img.loaded{opacity:1}
+.modal-body{padding:22px 20px 26px}
+.modal-close{position:sticky;top:0;float:right;margin:10px 10px 0 0;background:rgba(255,255,255,0.05);border:1px solid var(--border);width:30px;height:30px;border-radius:50%;cursor:pointer;color:var(--soft);font-size:0.85rem;display:flex;align-items:center;justify-content:center;z-index:10}
+.modal-close:hover{background:rgba(255,255,255,0.1)}
+.modal-era{font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--rust);margin-bottom:7px}
+.modal-title{font-family:'Libre Baskerville',serif;font-size:1.4rem;font-style:italic;line-height:1.15;color:var(--cream);margin-bottom:3px}
+.modal-artist{font-size:0.85rem;color:var(--soft);font-weight:300;margin-bottom:18px}
+.modal-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.modal-meta label{display:block;font-family:'DM Mono',monospace;font-size:0.44rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.modal-meta span{font-size:0.82rem;color:var(--soft);font-weight:300}
+.modal-history{font-size:0.88rem;line-height:1.8;color:#8a7860;font-weight:300;margin-bottom:16px}
+.modal-why{padding:13px 15px;border-left:2px solid var(--gold);background:rgba(201,160,80,0.04)}
+.modal-why h4{font-family:'DM Mono',monospace;font-size:0.44rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.modal-why p{font-size:0.84rem;line-height:1.68;color:#7a6850;font-style:italic;font-weight:300}
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="header-inner">
-    <div class="eyebrow">A Journey Through Art History</div>
-    <div class="h1">One Masterpiece a Day</div>
-    <div class="orn">✦ ✦ ✦</div>
-    <div class="sub">From cave paintings to contemporary canvas</div>
+
+
+
+<header>
+  <div class="logo">Art <em>A</em> Day</div>
+  <div class="hdr-meta">
+    <div class="hdr-date" id="hdrDate"></div>
+    <div class="hdr-count" id="hdrCount"></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div class="today-label">Today's Artwork</div>
+    <div class="hero-frame">
+      <div class="frame-border"></div>
+      <div class="frame-corner tl"></div><div class="frame-corner tr"></div>
+      <div class="frame-corner bl"></div><div class="frame-corner br"></div>
+      <div class="hero-img-wrap">
+        <div class="spinner" id="heroSpinner"></div>
+        <img class="hero-img" id="heroImg" alt="" />
+      </div>
+    </div>
+    <div class="hero-era" id="heroEra"></div>
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <div class="hero-artist" id="heroArtist"></div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta">
+      <div class="meta-block"><label>Year</label><span id="heroYear"></span></div>
+      <div class="meta-block"><label>Origin</label><span id="heroOrigin"></span></div>
+      <div class="meta-block"><label>Medium</label><span id="heroMedium"></span></div>
+      <div class="meta-block"><label>Now at</label><span id="heroLocation"></span></div>
+    </div>
+    <p class="hero-history" id="heroHistory"></p>
+    <div class="why-block"><h4>Why It Matters</h4><p id="heroWhy"></p></div>
+    <div class="next-bar">
+      <div class="next-bar-label">Next piece in</div>
+      <div class="next-bar-time" id="countdown">--:--:--</div>
+      <div class="next-bar-sep"></div>
+      <div class="next-bar-hint" id="nextHint"></div>
+    </div>
+  </div>
+  <div class="scroll-cue" onclick="document.getElementById('coll').scrollIntoView({behavior:'smooth'})">
+    <span>Browse Collection</span>
+    <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<section class="collection" id="coll">
+  <div class="era-tabs" id="eraTabs"></div>
+  <div id="collBody"></div>
+</section>
+
+<div class="overlay" id="overlay" onclick="handleOverlay(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img-wrap"><img class="modal-img" id="mImg" alt="" /></div>
+    <div class="modal-body">
+      <div class="modal-era" id="mEra"></div>
+      <div class="modal-title" id="mTitle"></div>
+      <div class="modal-artist" id="mArtist"></div>
+      <div class="modal-meta">
+        <div><label>Year</label><span id="mYear"></span></div>
+        <div><label>Origin</label><span id="mOrigin"></span></div>
+        <div><label>Medium</label><span id="mMedium"></span></div>
+        <div><label>Now at</label><span id="mLocation"></span></div>
+      </div>
+      <p class="modal-history" id="mHistory"></p>
+      <div class="modal-why"><h4>Why It Matters</h4><p id="mWhy"></p></div>
+    </div>
   </div>
 </div>
-<div class="era-nav" id="eraNav"></div>
-<div class="container"><div id="display"></div></div>
 
 <script>
-const ERAS=[
-  {k:"all",l:"All Eras"},{k:"prehistoric",l:"Prehistoric"},{k:"ancient",l:"Ancient Egypt & Greece"},
-  {k:"medieval",l:"Medieval"},{k:"renaissance",l:"Renaissance"},{k:"baroque",l:"Baroque"},
-  {k:"romantic",l:"Romanticism"},{k:"impressionism",l:"Impressionism"},{k:"modern",l:"Modern"},
-  {k:"contemporary",l:"Contemporary"}
+// ── DATA ─────────────────────────────────────────────────────────
+const S = { // Starters: 5 per era
+  ancient:[
+    {t:"Hall of the Bulls",a:"Unknown Paleolithic Artists",y:"c. 17,000 BCE",o:"Lascaux, France",m:"Natural pigments on limestone",l:"Lascaux Cave, France",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Lascaux_painting.jpg/800px-Lascaux_painting.jpg",h:"Deep in a cave in the Dordogne region of France, Paleolithic humans created one of humanity's oldest masterpieces. The Hall of the Bulls features massive aurochs, horses, and deer painted across a vaulted ceiling — discovered by accident in 1940 by four teenagers following their dog.",w:"This is where human storytelling begins. These paintings prove that the urge to create art is as ancient as humanity itself — not a luxury, but a fundamental need."},
+    {t:"Death Mask of Tutankhamun",a:"Unknown Egyptian Craftsmen",y:"c. 1323 BCE",o:"Thebes, Egypt",m:"Gold, lapis lazuli, carnelian",l:"Egyptian Museum, Cairo",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/CairoEgMuseumTaaMaskCleaned_edit1.jpg/640px-CairoEgMuseumTaaMaskCleaned_edit1.jpg",h:"Created for the young pharaoh Tutankhamun who died around age 19, this funeral mask weighs 10.23 kg of solid gold. It remained undisturbed for over 3,000 years until Howard Carter's legendary 1922 excavation.",w:"It represents the Egyptian belief in eternal life. The gold was believed to be the flesh of the gods — wearing it, Tutankhamun became divine."},
+    {t:"Discobolus",a:"Myron (Roman marble copy)",y:"c. 450 BCE",o:"Ancient Greece",m:"Marble (copy of lost bronze)",l:"Museo Nazionale Romano, Rome",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Discobolus_in_National_Roman_Museum.jpg/480px-Discobolus_in_National_Roman_Museum.jpg",h:"The original bronze by Myron is lost; we know it only through Roman marble copies. It captures an athlete frozen at the apex of a discus throw — a moment of perfect dynamic tension.",w:"It shattered a 2,000-year convention of depicting figures in static poses, proving that art could capture a single fleeting, charged moment."},
+    {t:"Venus of Willendorf",a:"Unknown Paleolithic Artist",y:"c. 25,000 BCE",o:"Willendorf, Austria",m:"Oolitic limestone, ochre",l:"Naturhistorisches Museum, Vienna",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Venus_von_Willendorf_01.jpg/360px-Venus_von_Willendorf_01.jpg",h:"This tiny 11cm figurine is one of the earliest known works of figurative art. The exaggerated form suggests associations with fertility or the female body as a symbol of abundance and survival.",w:"It tells us that abstract symbolic thinking existed 25,000 years before writing. Art, it turns out, is older than civilization itself."},
+    {t:"Bust of Nefertiti",a:"Thutmose (attributed)",y:"c. 1345 BCE",o:"Amarna, Egypt",m:"Painted limestone, gypsum stucco",l:"Neues Museum, Berlin",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Nofretete_Neues_Museum.jpg/480px-Nofretete_Neues_Museum.jpg",h:"Discovered in 1912 in the sculptor Thutmose's workshop in Amarna, this painted bust of Queen Nefertiti is one of the most famous works of ancient art — likely a sculptor's model never meant for public display.",w:"Its asymmetry (one eye left blank) makes it eerily modern. It has become a symbol of ancient Egypt and a focal point in ongoing debates about cultural heritage repatriation."},
+  ],
+  medieval:[
+    {t:"Justinian Mosaic",a:"Unknown Byzantine Artists",y:"c. 547 CE",o:"Ravenna, Italy",m:"Glass tesserae mosaic",l:"Basilica of San Vitale, Ravenna",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Meister_von_San_Vitale_in_Ravenna.jpg/800px-Meister_von_San_Vitale_in_Ravenna.jpg",h:"Emperor Justinian I had himself immortalized in this apse mosaic. He is shown holding a golden paten, surrounded by clergy and soldiers, feet hovering above the ground to suggest divine authority.",w:"The mosaic established visual conventions shaping Christian art for a millennium: gold backgrounds for heaven, frontal hieratic gazes, and the Emperor as God's earthly representative."},
+    {t:"Ognissanti Madonna",a:"Giotto di Bondone",y:"c. 1310",o:"Florence, Italy",m:"Tempera and gold on panel",l:"Uffizi Gallery, Florence",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Giotto_di_Bondone_-_Ognissanti_Madonna_-_Google_Art_Project.jpg/600px-Giotto_di_Bondone_-_Ognissanti_Madonna_-_Google_Art_Project.jpg",h:"When Byzantine art kept figures flat and stylized, Giotto introduced weight, volume, and actual space. Mary sits on a throne that recedes into depth; the angels look at each other across genuine three-dimensional space.",w:"Giotto broke a thousand years of artistic convention. He is the father of Western painting and the first decisive step toward the Renaissance."},
+    {t:"Bayeux Tapestry (detail)",a:"Unknown Norman or English Embroiderers",y:"c. 1070s CE",o:"Normandy, France",m:"Wool embroidery on linen",l:"Musée de la Tapisserie, Bayeux",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Bayeux_Tapestry_WP_version.jpg/1200px-Bayeux_Tapestry_WP_version.jpg",h:"This 70-metre embroidered strip narrates the Norman Conquest of England in 1066. It is the world's oldest surviving sequential narrative artwork — a story told in scenes, like a medieval comic strip.",w:"It is simultaneously political propaganda, military manual, and work of art. More than 900 years old, it remains the most vivid visual document of the medieval world."},
+    {t:"Wilton Diptych",a:"Unknown English or French Painter",y:"c. 1395–1399",o:"England or France",m:"Egg tempera and gold leaf on oak",l:"National Gallery, London",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Wilton_Diptych.jpg/800px-Wilton_Diptych.jpg",h:"This small portable altarpiece shows King Richard II of England kneeling before the Virgin Mary and Christ Child, surrounded by angels wearing his personal badge of the white hart.",w:"Its exquisite detail and intimate scale reveal that medieval art was not just monumental — it was also deeply personal, made for private prayer and contemplation."},
+    {t:"Très Riches Heures du Duc de Berry",a:"Limbourg Brothers",y:"c. 1412–1416",o:"France",m:"Tempera and gold on vellum",l:"Musée Condé, Chantilly",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Les_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_janvier.jpg/480px-Les_Tr%C3%A8s_Riches_Heures_du_duc_de_Berry_janvier.jpg",h:"Commissioned by the Duke of Berry, this illuminated manuscript is the finest example of International Gothic style. The calendar pages show seasonal peasant and noble life with extraordinary naturalistic detail.",w:"It bridged medieval symbolism and Renaissance realism. The Limbourg brothers died with the Duke in 1416, likely from plague, leaving it unfinished — which makes it all the more poignant."},
+  ],
+  renaissance:[
+    {t:"Mona Lisa",a:"Leonardo da Vinci",y:"1503–1519",o:"Florence, Italy",m:"Oil on poplar panel",l:"Louvre Museum, Paris",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/600px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",h:"Believed to depict Lisa Gherardini, wife of Florentine merchant Francesco del Giocondo, Leonardo worked on this portrait for years and never delivered it. His revolutionary sfumato technique creates the famously ambiguous, atmospheric quality.",w:"It represents the summit of Renaissance naturalism. Leonardo treated the human face as a landscape of psychological depth — something no painter had attempted with such mastery."},
+    {t:"The Birth of Venus",a:"Sandro Botticelli",y:"c. 1484–1486",o:"Florence, Italy",m:"Tempera on canvas",l:"Uffizi Gallery, Florence",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1200px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg",h:"Commissioned by the Medici family, Botticelli painted the goddess Venus emerging from the sea as a full-grown woman. It was the first large-scale mythological nude of the Renaissance.",w:"It signaled the Renaissance's rediscovery of Classical antiquity and the legitimacy of beauty as a subject in itself. Venus is not a sinner — she is an ideal to be celebrated."},
+    {t:"The Creation of Adam",a:"Michelangelo Buonarroti",y:"1508–1512",o:"Vatican City",m:"Fresco (Sistine Chapel Ceiling)",l:"Sistine Chapel, Vatican City",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg/1200px-Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg",h:"Pope Julius II commanded Michelangelo — primarily a sculptor — to paint the Sistine Chapel ceiling. Working for four years, he painted over 300 figures. God reaching toward Adam is the ceiling's central panel.",w:"The definitive statement of Renaissance humanism: the human body as divine, muscular, and magnificent. No single work has been more studied or referenced in Western art history."},
+    {t:"School of Athens",a:"Raphael",y:"1509–1511",o:"Vatican City",m:"Fresco",l:"Apostolic Palace, Vatican City",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg/1200px-%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg",h:"Painted for Pope Julius II's private library, this fresco depicts all the great philosophers of antiquity gathered in a grand space. Plato and Aristotle stand at the centre; Raphael includes himself in the crowd.",w:"It is the Renaissance ideal made visible: the belief that ancient Greek wisdom and Christian Rome could coexist and enrich each other."},
+    {t:"The Arnolfini Portrait",a:"Jan van Eyck",y:"1434",o:"Bruges, Flanders (now Belgium)",m:"Oil on oak panel",l:"National Gallery, London",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Van_Eyck_-_Arnolfini_Portrait.jpg/600px-Van_Eyck_-_Arnolfini_Portrait.jpg",h:"This double portrait of Italian merchant Giovanni di Nicolao Arnolfini and his wife is one of the most complex paintings in Western art. The convex mirror on the back wall reflects the entire room — including two figures who may be witnesses.",w:"Van Eyck mastered oil paint so completely that surfaces — fur, velvet, candlelight — feel impossibly real. It is the birth of photorealism, 500 years before photography."},
+  ],
+  baroque:[
+    {t:"Las Meninas",a:"Diego Velázquez",y:"1656",o:"Madrid, Spain",m:"Oil on canvas",l:"Museo del Prado, Madrid",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg/800px-Las_Meninas%2C_by_Diego_Vel%C3%A1zquez%2C_from_Prado_in_Google_Earth.jpg",h:"Painted in the royal court of Philip IV, this scene shows the Infanta Margarita surrounded by ladies-in-waiting — and in a background mirror, the reflection of the King and Queen. Velázquez himself appears brush in hand. You stand exactly where the royals stood.",w:"Velázquez collapsed the boundary between painting and reality 300 years before postmodernism made it fashionable. Who is the subject? Who is looking at whom? It still has no definitive answer."},
+    {t:"The Calling of Saint Matthew",a:"Caravaggio",y:"1599–1600",o:"Rome, Italy",m:"Oil on canvas",l:"San Luigi dei Francesi, Rome",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/The_Calling_of_Saint_Matthew-Caravaggo_%281599-1600%29.jpg/1200px-The_Calling_of_Saint_Matthew-Caravaggo_%281599-1600%29.jpg",h:"Christ enters from the right to summon the tax collector Matthew. Caravaggio set the scene not in a biblical landscape but in a gritty Roman tavern. A shaft of divine light cuts through the darkness, falling on Matthew's bewildered face.",w:"Caravaggio invented chiaroscuro as a dramatic tool. Every film noir and cinematic spotlight owes something to this painting."},
+    {t:"Girl with a Pearl Earring",a:"Johannes Vermeer",y:"c. 1665",o:"Delft, Netherlands",m:"Oil on canvas",l:"Mauritshuis, The Hague",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/1665_Girl_with_a_Pearl_Earring.jpg/600px-1665_Girl_with_a_Pearl_Earring.jpg",h:"Often called the 'Mona Lisa of the North', this tronie shows an unknown girl caught in a moment of turning. The large pearl earring, simple clothing, and dark background are all Vermeer's characteristic restraint.",w:"Vermeer was the poet of ordinary light. Where others painted spectacle, he painted a moment — a glance, a ray of sun — and made it eternal."},
+    {t:"The Night Watch",a:"Rembrandt van Rijn",y:"1642",o:"Amsterdam, Netherlands",m:"Oil on canvas",l:"Rijksmuseum, Amsterdam",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Night_Watch_-_HD.jpg/1200px-The_Night_Watch_-_HD.jpg",h:"Rembrandt's most famous work depicts a militia company mid-action — some figures stepping forward into light, others receding into shadow. Unlike the stiff group portraits typical of the era, this painting crackles with energy.",w:"It broke every rule of the Dutch group portrait. Rembrandt cared more about drama and light than equal face time for each patron — and revolutionized painting in the process."},
+    {t:"The Ecstasy of Saint Teresa",a:"Gian Lorenzo Bernini",y:"1647–1652",o:"Rome, Italy",m:"Marble, gilded bronze, stucco",l:"Santa Maria della Vittoria, Rome",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ecstasy_of_Saint_Theresa_September_2015-2a.jpg/600px-Ecstasy_of_Saint_Theresa_September_2015-2a.jpg",h:"Bernini carved this marble group showing Saint Teresa in mystical ecstasy as an angel prepares to pierce her heart. The marble seems to dissolve into soft fabric, cloud, and flesh — an impossible feat of technique.",w:"Bernini unified architecture, sculpture, and painting into a single theatrical experience — the Baroque 'total artwork'. He turned stone into a performance."},
+  ],
+  modern:[
+    {t:"The Starry Night",a:"Vincent van Gogh",y:"June 1889",o:"Saint-Rémy-de-Provence, France",m:"Oil on canvas",l:"MoMA, New York",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",h:"Van Gogh painted this from his room at the Saint-Paul-de-Mausole asylum. The swirling sky was painted from memory before dawn — the village at the bottom is largely fictional.",w:"Van Gogh turned inner anguish into cosmic beauty. His thick impasto brushwork made paint itself a vehicle for emotion, launching Expressionism and modern art's obsession with psychological truth."},
+    {t:"The Persistence of Memory",a:"Salvador Dalí",y:"1931",o:"Cadaqués, Catalonia, Spain",m:"Oil on canvas",l:"MoMA, New York",i:"https://upload.wikimedia.org/wikipedia/en/d/dd/The_Persistence_of_Memory.jpg",h:"Dalí painted this small canvas (24 × 33 cm) in just a few hours. The image of melting watches came to him while contemplating melting Camembert cheese. The landscape is the cliffs of Cap de Creus.",w:"The defining image of Surrealism: the dreamlike world made physically real with meticulous technique. What if time itself was soft, unreliable, subject to the unconscious mind?"},
+    {t:"The Third of May 1808",a:"Francisco Goya",y:"1814",o:"Madrid, Spain",m:"Oil on canvas",l:"Museo del Prado, Madrid",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/El_Tres_de_Mayo%2C_by_Francisco_de_Goya%2C_from_Prado_thin_black_margin.jpg/1200px-El_Tres_de_Mayo%2C_by_Francisco_de_Goya%2C_from_Prado_thin_black_margin.jpg",h:"Goya showed the French execution of Spanish civilians who revolted against Napoleon's invasion. The central figure stands arms outstretched — a conscious echo of the crucified Christ — facing an anonymous mechanized firing squad.",w:"The first great anti-war painting. Goya transformed political atrocity into art, establishing a lineage running through Picasso's Guernica to documentary war photography."},
+    {t:"Les Demoiselles d'Avignon",a:"Pablo Picasso",y:"1907",o:"Paris, France",m:"Oil on canvas",l:"MoMA, New York",i:"https://upload.wikimedia.org/wikipedia/en/4/4c/Les_Demoiselles_d%27Avignon.jpg",h:"Picasso worked on this massive canvas in secrecy for months. Five nude women with faces fractured into angular planes, inspired by African and Iberian masks. Even Matisse was shocked when he finally saw it.",w:"It destroyed the Renaissance tradition of depicting space and the human figure. Cubism fractured reality into multiple simultaneous viewpoints — opening the door to every avant-garde movement."},
+    {t:"Water Lilies",a:"Claude Monet",y:"1906",o:"Giverny, France",m:"Oil on canvas",l:"Art Institute of Chicago",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Claude_Monet_-_Water_Lilies_-_1906%2C_Ryerson.jpg/1200px-Claude_Monet_-_Water_Lilies_-_1906%2C_Ryerson.jpg",h:"Monet spent the last 30 years of his life painting the water garden he designed at Giverny, producing over 250 paintings of the lily pond. These works dissolve form entirely in favour of pure light and reflection.",w:"Monet's late paintings are proto-abstract. He was going blind as he painted them. The Water Lilies series is a meditation on perception itself — how we see, not just what we see."},
+  ],
+  contemporary:[
+    {t:"Lavender Mist",a:"Jackson Pollock",y:"1950",o:"Springs, New York",m:"Oil, enamel, aluminium on canvas",l:"National Gallery of Art, Washington D.C.",i:"https://upload.wikimedia.org/wikipedia/en/4/4a/Lavender_Mist.jpg",h:"Pollock developed his drip technique by placing canvas on the floor and moving around it, flinging paint in a kind of dance. Lavender Mist is considered his greatest achievement — an all-over shimmering field that vibrates with energy.",w:"Pollock shifted the center of the art world from Paris to New York. He argued that the act of painting was itself the art — the body, the gesture, the process. This was the birth of performance art."},
+    {t:"Marilyn Diptych",a:"Andy Warhol",y:"1962",o:"New York City",m:"Silkscreen ink on canvas",l:"Tate Modern, London",i:"https://upload.wikimedia.org/wikipedia/en/5/5f/Marilyn_diptych_by_Andy_Warhol.jpg",h:"Warhol created this work weeks after Marilyn Monroe's death. The left panel shows 25 brightly colored Marilyns; the right shows 25 fading into grey. A publicity still from 1953, repeated like a consumer product rolling off an assembly line.",w:"The diptych format deliberately echoes religious icons — Marilyn as the secular saint of American fame culture. Warhol made the gallery indistinguishable from the supermarket."},
+    {t:"Campbell's Soup Cans",a:"Andy Warhol",y:"1962",o:"New York City",m:"Synthetic polymer paint on 32 canvases",l:"MoMA, New York",i:"https://upload.wikimedia.org/wikipedia/en/3/3c/Campbells_Soup_Cans_MOMA.jpg",h:"Warhol exhibited 32 canvases, each depicting a different variety of Campbell's Soup, displayed on shelves like a supermarket. The LA gallery initially displayed them with a can opener, inviting visitors to buy one for 33 cents.",w:"It asked one simple, devastating question: is a soup can art? By insisting yes — with absolute deadpan seriousness — Warhol permanently erased the line between high culture and mass consumerism."},
+    {t:"Balloon Dog (Orange)",a:"Jeff Koons",y:"1994–2000",o:"New York City",m:"Mirror-polished stainless steel",l:"Various collections (editions of 5)",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Jeff_Koons_Balloon_Dog.jpg/600px-Jeff_Koons_Balloon_Dog.jpg",h:"Koons spent six years fabricating this monumental sculpture from mirror-polished steel, mimicking a balloon animal twisted by a party entertainer. One sold at Christie's in 2013 for $58.4 million.",w:"It is simultaneously profound and absurd — a children's toy at monument scale in luxury materials. It asks what we value, what we call art, and what separates kitsch from genius."},
+    {t:"Untitled (Your body is a battleground)",a:"Barbara Kruger",y:"1989",o:"New York City",m:"Photographic silkscreen on vinyl",l:"Broad Museum, Los Angeles",i:"https://upload.wikimedia.org/wikipedia/en/0/0e/Kruger_Untitled_Your_body_is_a_battleground.jpg",h:"Created for the 1989 Women's March on Washington, Kruger split a woman's face into positive and negative halves, overlaid with bold text addressing abortion rights, bodily autonomy, and media representation of women.",w:"Kruger weaponized advertising's own visual language against it. She turned the billboard into a feminist declaration — and defined political art for the late 20th century."},
+  ],
+};
+
+// Daily unlocks — appended 1 per day after launch
+const DAILY = [
+  {era:"ancient",t:"The Seated Scribe",a:"Unknown Egyptian Artist",y:"c. 2620–2500 BCE",o:"Saqqara, Egypt",m:"Painted limestone, rock crystal eyes",l:"Louvre Museum, Paris",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Egyptian_-_Seated_Scribe_-_Walters_22393_-_Three_Quarter.jpg/390px-Egyptian_-_Seated_Scribe_-_Walters_22393_-_Three_Quarter.jpg",h:"Found at Saqqara near the Step Pyramid, this painted limestone figure shows a cross-legged scribe alert and ready to write. The eyes — inlaid with rock crystal, alabaster, and copper — are so lifelike that workers who uncovered it reportedly recoiled in shock.",w:"It humanised the ancient world. Where most Egyptian art depicted gods and pharaohs as remote ideals, the Seated Scribe is simply a man at work — and the rock crystal eyes make him feel alive across 4,500 years."},
+  {era:"renaissance",t:"The Last Supper",a:"Leonardo da Vinci",y:"1495–1498",o:"Milan, Italy",m:"Tempera and oil on plaster",l:"Santa Maria delle Grazie, Milan",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/%C3%9Altima_Cena_-_Da_Vinci_5.jpg/1200px-%C3%9Altima_Cena_-_Da_Vinci_5.jpg",h:"Painted on the refectory wall of a Milan convent, this mural captures the moment Christ announces that one of his disciples will betray him. Each of the twelve apostles reacts differently — Leonardo studied human expression for months to paint each face.",w:"It is the definitive depiction of drama in Western art. Leonardo organised twelve individual psychological portraits into one composition that still teaches artists how to tell a story."},
+  {era:"baroque",t:"Judith Slaying Holofernes",a:"Artemisia Gentileschi",y:"1614–1620",o:"Florence, Italy",m:"Oil on canvas",l:"Uffizi Gallery, Florence",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Artemisia_Gentileschi_-_Judith_Beheading_Holofernes_-_WGA8563.jpg/600px-Artemisia_Gentileschi_-_Judith_Beheading_Holofernes_-_WGA8563.jpg",h:"Artemisia Gentileschi — the most significant female artist of the Baroque era — painted the biblical heroine Judith decapitating the Assyrian general Holofernes with visceral, unflinching realism.",w:"It was a radical act for a woman to paint violence with such authority. Artemisia reclaimed the narrative, placing female agency at the centre of a moment usually depicted as passive heroism."},
+  {era:"modern",t:"Guernica",a:"Pablo Picasso",y:"1937",o:"Paris, France",m:"Oil on canvas",l:"Museo Reina Sofía, Madrid",i:"https://upload.wikimedia.org/wikipedia/en/7/74/PicassoGuernica.jpg",h:"Picasso painted this enormous canvas in response to the Nazi bombing of the Basque town of Guernica. In black, white, and grey, it shows screaming women, a dying horse, a dead baby, dismembered soldiers, and a lightbulb — the eye of a merciless god.",w:"The most powerful anti-war image ever made. Picasso refused to let it return to Spain until democracy was restored — it arrived at the Reina Sofía in 1981, six years after Franco's death."},
+  {era:"medieval",t:"Book of Kells (Chi Rho page)",a:"Unknown Insular Monks",y:"c. 800 CE",o:"Iona, Scotland / Kells, Ireland",m:"Ink, pigments, and gold on vellum",l:"Trinity College Library, Dublin",i:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/KellsFol034rChiRhoMonogram.jpg/480px-KellsFol034rChiRhoMonogram.jpg",h:"Created by Celtic monks, the Book of Kells is the most elaborate illuminated manuscript ever made. The Chi Rho page — XP, the first letters of Christ in Greek — is filled with interlocking spirals, animals, and angels so intricate that they can only be fully seen under magnification.",w:"Each page took months to complete. The monks believed that creating something too beautiful for human eyes to fully perceive was an act of devotion — they were making it for God."},
 ];
 
-let currentEra="all", loading=false;
+// ── LAUNCH CONFIG ─────────────────────────────────────────────────
+const LAUNCH = new Date('2025-03-01');
+const ERAS = ['all','ancient','medieval','renaissance','baroque','modern','contemporary'];
+const ERA_LABEL = {all:'All',ancient:'Ancient',medieval:'Medieval',renaissance:'Renaissance',baroque:'Baroque',modern:'Modern',contemporary:'Contemporary'};
 
-// Build era nav
-const navEl=document.getElementById("eraNav");
-ERAS.forEach(e=>{
-  const b=document.createElement("button");
-  b.className="era-btn"+(e.k==="all"?" active":"");
-  b.id="era-"+e.k;
-  b.textContent=e.l;
-  b.onclick=()=>{
-    if(loading) return;
-    currentEra=e.k;
-    document.querySelectorAll(".era-btn").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    fetchAndRender();
-  };
-  navEl.appendChild(b);
-});
+const now = new Date();
+const dayN = Math.max(0, Math.floor((now - LAUNCH) / 86400000));
+const unlockedN = Math.min(dayN, DAILY.length); // how many daily unlocks visible (not counting today)
+const todayIdx = Math.min(dayN, DAILY.length - 1);
+const TODAY = {...DAILY[todayIdx], era: DAILY[todayIdx].era};
 
-function setNavDisabled(disabled){
-  document.querySelectorAll(".era-btn").forEach(b=>b.disabled=disabled);
+// Build collection: all starters + daily unlocks EXCEPT today
+function buildColl() {
+  const c = {};
+  ERAS.filter(e=>e!=='all').forEach(e => { c[e] = S[e].map(a=>({...a,era:e,starter:true})); });
+  for (let i = 0; i < unlockedN - 1; i++) {
+    const d = DAILY[i];
+    if (c[d.era]) c[d.era].push({...d,starter:false});
+  }
+  return c;
+}
+const COLL = buildColl();
+const totalPieces = Object.values(COLL).reduce((s,a)=>s+a.length,0);
+
+// ── HEADER ────────────────────────────────────────────────────────
+document.getElementById('hdrDate').textContent =
+  now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}).toUpperCase();
+document.getElementById('hdrCount').textContent =
+  `${totalPieces} piece${totalPieces!==1?'s':''} in collection`;
+
+// ── IMAGE LOADER ──────────────────────────────────────────────────
+const cache = {};
+async function loadImg(url, el, spinner) {
+  if (!url) return;
+  if (cache[url]) { el.src=cache[url]; el.classList.add('loaded'); if(spinner)spinner.classList.add('hidden'); return; }
+  const file = decodeURIComponent(url.split('/').pop().replace(/^\d+px-/,''));
+  const api = `https://en.wikipedia.org/w/api.php?action=query&titles=File:${encodeURIComponent(file)}&prop=imageinfo&iiprop=url&iiurlwidth=700&format=json&origin=*`;
+  try {
+    const r = await fetch(api);
+    const d = await r.json();
+    const pg = Object.values(d?.query?.pages||{})[0];
+    const src = pg?.imageinfo?.[0]?.thumburl || pg?.imageinfo?.[0]?.url;
+    if (src) { cache[url]=src; el.src=src; el.onload=()=>{el.classList.add('loaded');if(spinner)spinner.classList.add('hidden')}; el.onerror=()=>direct(url,el,spinner); return; }
+  } catch(e){}
+  direct(url,el,spinner);
+}
+function direct(url,el,spinner){
+  el.src=url; el.onload=()=>{el.classList.add('loaded');if(spinner)spinner.classList.add('hidden')};
+  el.onerror=()=>{if(spinner)spinner.classList.add('hidden')};
 }
 
-function showGenerating(){
-  document.getElementById("display").innerHTML=`
-    <div class="generating">
-      <div class="gen-spinner"></div>
-      <div class="gen-label">Selecting today's masterpiece…</div>
-      <div class="gen-sub">Consulting the archives</div>
-    </div>`;
+// ── HERO ──────────────────────────────────────────────────────────
+const hi = document.getElementById('heroImg');
+const hs = document.getElementById('heroSpinner');
+document.getElementById('heroEra').textContent = ERA_LABEL[TODAY.era]||TODAY.era;
+document.getElementById('heroTitle').textContent = TODAY.t;
+document.getElementById('heroArtist').textContent = TODAY.a;
+document.getElementById('heroYear').textContent = TODAY.y;
+document.getElementById('heroOrigin').textContent = TODAY.o;
+document.getElementById('heroMedium').textContent = TODAY.m;
+document.getElementById('heroLocation').textContent = TODAY.l;
+document.getElementById('heroHistory').textContent = TODAY.h;
+document.getElementById('heroWhy').textContent = TODAY.w;
+hi.onload = ()=>{ hi.classList.add('loaded'); hs.classList.add('hidden'); document.getElementById('heroBg').style.backgroundImage=`url(${hi.src})`; };
+loadImg(TODAY.i, hi, hs);
+
+const rem = DAILY.length - (dayN+1);
+document.getElementById('nextHint').textContent = rem>0 ? `${rem} more to come` : 'Full collection unlocked!';
+
+// ── COUNTDOWN ────────────────────────────────────────────────────
+function tick(){
+  const t=new Date(); t.setDate(t.getDate()+1); t.setHours(0,0,0,0);
+  const d=t-new Date();
+  const pad=n=>String(Math.floor(n)).padStart(2,'0');
+  document.getElementById('countdown').textContent=`${pad(d/3600000)}:${pad((d%3600000)/60000)}:${pad((d%60000)/1000)}`;
 }
+tick(); setInterval(tick,1000);
 
-async function fetchArtwork(era){
-  const eraPrompt = era==="all"
-    ? "any era from prehistoric to contemporary"
-    : era;
-
-  const sys = `You are an art historian with deep, engaging knowledge of art history. When asked, return ONLY a valid JSON object — no markdown, no backticks, no preamble. Pick a real, famous artwork and vary your selections widely across geography, period, and style. Include both canonical masterpieces and genuinely interesting lesser-known works.
-
-Return exactly this JSON structure:
-{
-  "eraLabel": "Italian Renaissance · 1503–1519",
-  "title": "Mona Lisa",
-  "artist": "Leonardo da Vinci",
-  "date": "1503–1519",
-  "origin": "Florence, Italy",
-  "medium": "Oil on poplar panel",
-  "location": "Louvre Museum, Paris",
-  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/600px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
-  "description": "3–4 sentences describing what you see in the work and what makes it visually striking.",
-  "history": "3–4 sentences on the historical context, commission, provenance, or notable events in the work's life.",
-  "why": "3–4 sentences on why this work matters — its influence, what it changed, why we still care."
-}
-
-For imageUrl: provide a real, working Wikimedia Commons thumbnail URL for the artwork. Use the format https://upload.wikimedia.org/wikipedia/commons/thumb/... whenever possible. If unsure of the exact URL, use a close approximation — the app will handle failures gracefully.`;
-
-  const resp = await fetch("https://api.anthropic.com/v1/messages",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      model:"claude-haiku-4-5-20251001",
-      max_tokens:1000,
-      system:sys,
-      messages:[{role:"user",content:`Give me a masterpiece from ${eraPrompt}. Be surprising — avoid the most obvious choices when possible.`}]
-    })
+// ── TABS ──────────────────────────────────────────────────────────
+let activeEra='all';
+function countEra(e){ return e==='all'?Object.values(COLL).reduce((s,a)=>s+a.length,0):(COLL[e]||[]).length; }
+function buildTabs(){
+  const nav=document.getElementById('eraTabs'); nav.innerHTML='';
+  ERAS.forEach(e=>{
+    const b=document.createElement('button');
+    b.className='era-tab'+(e===activeEra?' active':'');
+    b.innerHTML=`${ERA_LABEL[e]} <span class="tab-pill">${countEra(e)}</span>`;
+    b.onclick=()=>{activeEra=e;buildTabs();renderColl();};
+    nav.appendChild(b);
   });
+}
 
-  if(!resp.ok){
-    const errText=await resp.text().catch(()=>"");
-    throw new Error(`API ${resp.status}: ${errText}`);
+// ── COLLECTION ────────────────────────────────────────────────────
+function renderColl(){
+  const body=document.getElementById('collBody'); body.innerHTML='';
+  const pieces = activeEra==='all'
+    ? Object.entries(COLL).flatMap(([e,arr])=>arr.map(a=>({...a,era:e})))
+    : (COLL[activeEra]||[]).map(a=>({...a,era:activeEra}));
+
+  const hdr=document.createElement('div'); hdr.className='collection-header';
+  hdr.innerHTML=`<div class="collection-title">Collection${activeEra!=='all'?' — '+ERA_LABEL[activeEra]:''}</div><div class="collection-sub">${pieces.length} piece${pieces.length!==1?'s':''}</div>`;
+  body.appendChild(hdr);
+
+  if(!pieces.length){
+    const e=document.createElement('div'); e.className='empty-state';
+    e.innerHTML='<p>No pieces yet in this era.<br>Come back as your collection grows daily.</p>';
+    body.appendChild(e); return;
   }
-  const data=await resp.json();
-  const raw=data.content[0].text.trim();
-  const clean=raw.replace(/^```json\s*/,"").replace(/^```\s*/,"").replace(/\s*```$/,"").trim();
-  return JSON.parse(clean);
+
+  const grid=document.createElement('div'); grid.className='grid';
+  pieces.forEach(art=>{
+    const card=document.createElement('div'); card.className='card';
+    const badge=art.starter?'<div class="badge-starter">Starter</div>':'<div class="badge-new">Unlocked</div>';
+    card.innerHTML=`<div class="card-thumb"><div class="card-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>${badge}<img class="card-img" alt="${art.t}"/></div><div class="card-info"><div class="card-era">${ERA_LABEL[art.era]||art.era}</div><div class="card-title">${art.t}</div><div class="card-artist">${art.a}</div></div>`;
+    card.onclick=()=>openModal(art);
+    grid.appendChild(card);
+    loadImg(art.i, card.querySelector('.card-img'), null);
+  });
+  body.appendChild(grid);
 }
 
-async function fetchAndRender(){
-  if(loading) return;
-  loading=true;
-  setNavDisabled(true);
-  showGenerating();
-  window.scrollTo({top:0,behavior:"smooth"});
-
-  try{
-    const art=await fetchArtwork(currentEra);
-    render(art);
-  }catch(e){
-    document.getElementById("display").innerHTML=`
-      <div class="error-box">
-        <p>The gallery is momentarily indisposed.</p>
-        <p style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.1em;color:var(--text-light);opacity:0.7;margin-bottom:1.2rem">${e.message}</p>
-        <button class="retry-btn" onclick="fetchAndRender()">Try again</button>
-      </div>`;
-  }finally{
-    loading=false;
-    setNavDisabled(false);
-  }
+// ── MODAL ─────────────────────────────────────────────────────────
+function openModal(art){
+  document.getElementById('mEra').textContent=ERA_LABEL[art.era]||art.era;
+  document.getElementById('mTitle').textContent=art.t;
+  document.getElementById('mArtist').textContent=art.a;
+  document.getElementById('mYear').textContent=art.y;
+  document.getElementById('mOrigin').textContent=art.o;
+  document.getElementById('mMedium').textContent=art.m;
+  document.getElementById('mLocation').textContent=art.l;
+  document.getElementById('mHistory').textContent=art.h;
+  document.getElementById('mWhy').textContent=art.w;
+  const mi=document.getElementById('mImg'); mi.src=''; mi.classList.remove('loaded');
+  loadImg(art.i,mi,null);
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
 }
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); document.body.style.overflow=''; }
+function handleOverlay(e){ if(e.target===document.getElementById('overlay'))closeModal(); }
 
-function render(art){
-  const d=document.getElementById("display");
-  d.innerHTML=`
-    <div class="label-row"><span>Today's Masterpiece</span><hr></div>
-    <div class="badge">${esc(art.eraLabel)}</div>
-    <div class="art-title">${esc(art.title)}</div>
-    <div class="meta">
-      ${[["Artist",art.artist],["Date",art.date],["Origin",art.origin],["Medium",art.medium],["Now at",art.location]].map(([lb,v])=>`
-      <div class="meta-item"><span class="meta-label">${lb}</span><span class="meta-val">${esc(v||"—")}</span></div>`).join("")}
-    </div>
-    <div class="frame-wrap">
-      <div class="frame" id="frame">
-        <span class="frame-corner" style="top:5px;left:5px">✦</span>
-        <span class="frame-corner" style="bottom:5px;right:5px">✦</span>
-        <div class="img-placeholder" id="imgLoad">
-          <div class="spinner"></div>
-          <span style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light)">Loading artwork</span>
-        </div>
-        <img id="artImg" class="art-img" style="display:none" alt="${esc(art.title)}">
-      </div>
-      <div class="img-credit">Public domain · Wikimedia Commons</div>
-    </div>
-    <div class="section"><div class="section-hd"><span>Description</span><hr></div><p>${esc(art.description)}</p></div>
-    <div class="section"><div class="section-hd"><span>History & Context</span><hr></div><p>${esc(art.history)}</p></div>
-    <div class="section"><div class="section-hd"><span>Why It Matters</span><hr></div><p>${esc(art.why)}</p></div>
-    <button class="surprise-btn" id="surpriseBtn" onclick="fetchAndRender()">✦ Show Me Another</button>
-  `;
-
-  // Load image
-  if(art.imageUrl){
-    const img=document.getElementById("artImg");
-    const loadEl=document.getElementById("imgLoad");
-    img.onload=()=>{if(loadEl)loadEl.style.display="none";img.style.display="block";};
-    img.onerror=()=>{
-      if(loadEl) loadEl.innerHTML=`
-        <div style="font-size:3rem;opacity:0.12">🖼</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-light);font-size:1rem;text-align:center;padding:0 1rem">${esc(art.title)}</p>
-        <p style="font-family:'Jost',sans-serif;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);opacity:0.5">Image unavailable</p>`;
-    };
-    img.src=art.imageUrl;
-  }
-}
-
-function esc(s){
-  if(!s) return "";
-  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
-// Init
-fetchAndRender();
+// ── INIT ──────────────────────────────────────────────────────────
+buildTabs();
+renderColl();
 </script>
 </body>
 </html>
