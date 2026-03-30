@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Masterpiece a Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#b8962e;--gold-light:#d4b253;--ink:#1a1208;--ink-mid:#2e2414;
+  --cream:#f7f3ec;--cream-dark:#ede7db;--rust:#8b3a1f;
+  --text:#2a1f0e;--text-mid:#5a4a35;--text-light:#8a7a65;
+  --border:rgba(184,150,46,0.2);
+}
+body{background:var(--cream);color:var(--text);font-family:'Jost',sans-serif;min-height:100vh}
+.header{background:var(--ink);text-align:center;padding:2.5rem 1.5rem 2rem;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(184,150,46,0.15) 0%,transparent 70%)}
+.header-inner{position:relative;z-index:1}
+.eyebrow{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem}
+.h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,5vw,2.8rem);font-weight:300;color:var(--cream);letter-spacing:0.06em;margin-bottom:0.5rem}
+.orn{color:var(--gold);letter-spacing:0.6em;font-size:0.7rem;margin:0.4rem 0}
+.sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(247,243,236,0.5);font-size:1rem;font-weight:300}
+.era-nav{background:var(--ink-mid);display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(184,150,46,0.15)}
+.era-nav::-webkit-scrollbar{display:none}
+.era-btn{flex:0 0 auto;border:none;background:none;color:rgba(247,243,236,0.4);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:0.8rem 1rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.25s}
+.era-btn:hover{color:rgba(247,243,236,0.7)}
+.era-btn.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(184,150,46,0.08)}
+.era-btn:disabled{opacity:0.4;cursor:not-allowed}
+.container{max-width:720px;margin:0 auto;padding:2rem 1.2rem 4rem}
+.label-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem}
+.label-row hr{flex:1;border:none;border-top:1px solid var(--border)}
+.label-row span{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.3em;color:var(--text-light);text-transform:uppercase;white-space:nowrap}
+.badge{display:inline-block;background:var(--ink);color:var(--gold);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:0.25rem 0.7rem;margin-bottom:0.9rem}
+.art-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,6vw,2.8rem);font-weight:400;font-style:italic;color:var(--rust);line-height:1.1;margin-bottom:0.4rem}
+.meta{display:flex;flex-wrap:wrap;gap:0.4rem 1.4rem;margin-bottom:1.6rem;padding-bottom:1.4rem;border-bottom:1px solid var(--border)}
+.meta-item{display:flex;align-items:baseline;gap:0.4rem;font-size:0.85rem}
+.meta-label{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold)}
+.meta-val{color:var(--text);font-family:'Jost',sans-serif;font-weight:300}
+.frame-wrap{margin:0 auto 2rem;max-width:500px}
+.frame{border:1px solid var(--border);padding:10px;background:white;box-shadow:0 2px 4px rgba(0,0,0,0.04),0 12px 40px rgba(0,0,0,0.12);position:relative;min-height:280px;display:flex;align-items:center;justify-content:center}
+.frame-corner{position:absolute;color:var(--gold);font-size:10px;opacity:0.5}
+.art-img{width:100%;display:block;max-height:440px;object-fit:contain}
+.img-placeholder{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:3rem;color:var(--text-light)}
+.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.img-credit{font-family:'Jost',sans-serif;font-size:9px;letter-spacing:0.1em;color:var(--text-light);text-align:right;margin-top:0.3rem;opacity:0.5;text-transform:uppercase}
+.section{margin-bottom:1.8rem}
+.section-hd{display:flex;align-items:center;gap:0.8rem;margin-bottom:0.7rem}
+.section-hd span{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+.section-hd hr{flex:1;border:none;border-top:1px solid var(--border)}
+.section p{font-family:'Libre Baskerville',serif;font-size:0.92rem;line-height:1.9;color:var(--text)}
+.surprise-btn{display:block;margin:2rem auto 0;background:var(--gold);border:none;color:var(--ink);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;padding:0.85rem 2rem;cursor:pointer;transition:background 0.2s;font-weight:500}
+.surprise-btn:hover:not(:disabled){background:var(--gold-light)}
+.surprise-btn:disabled{opacity:0.5;cursor:not-allowed}
+.generating{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:1.5rem;text-align:center}
+.gen-spinner{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+.gen-label{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-light);font-size:1.1rem}
+.gen-sub{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.6}
+.error-box{text-align:center;padding:3rem 1.5rem}
+.error-box p{font-family:'Libre Baskerville',serif;font-style:italic;color:var(--text-light);margin-bottom:1.2rem}
+.retry-btn{background:none;border:1px solid var(--border);color:var(--text);font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:0.7rem 1.3rem;cursor:pointer;transition:all 0.2s}
+.retry-btn:hover{background:var(--ink);color:var(--gold);border-color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div class="eyebrow">A Journey Through Art History</div>
+    <div class="h1">One Masterpiece a Day</div>
+    <div class="orn">✦ ✦ ✦</div>
+    <div class="sub">From cave paintings to contemporary canvas</div>
+  </div>
+</div>
+<div class="era-nav" id="eraNav"></div>
+<div class="container"><div id="display"></div></div>
+
+<script>
+const ERAS=[
+  {k:"all",l:"All Eras"},{k:"prehistoric",l:"Prehistoric"},{k:"ancient",l:"Ancient Egypt & Greece"},
+  {k:"medieval",l:"Medieval"},{k:"renaissance",l:"Renaissance"},{k:"baroque",l:"Baroque"},
+  {k:"romantic",l:"Romanticism"},{k:"impressionism",l:"Impressionism"},{k:"modern",l:"Modern"},
+  {k:"contemporary",l:"Contemporary"}
+];
+
+let currentEra="all", loading=false;
+
+// Build era nav
+const navEl=document.getElementById("eraNav");
+ERAS.forEach(e=>{
+  const b=document.createElement("button");
+  b.className="era-btn"+(e.k==="all"?" active":"");
+  b.id="era-"+e.k;
+  b.textContent=e.l;
+  b.onclick=()=>{
+    if(loading) return;
+    currentEra=e.k;
+    document.querySelectorAll(".era-btn").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    fetchAndRender();
+  };
+  navEl.appendChild(b);
+});
+
+function setNavDisabled(disabled){
+  document.querySelectorAll(".era-btn").forEach(b=>b.disabled=disabled);
+}
+
+function showGenerating(){
+  document.getElementById("display").innerHTML=`
+    <div class="generating">
+      <div class="gen-spinner"></div>
+      <div class="gen-label">Selecting today's masterpiece…</div>
+      <div class="gen-sub">Consulting the archives</div>
+    </div>`;
+}
+
+async function fetchArtwork(era){
+  const eraPrompt = era==="all"
+    ? "any era from prehistoric to contemporary"
+    : era;
+
+  const sys = `You are an art historian with deep, engaging knowledge of art history. When asked, return ONLY a valid JSON object — no markdown, no backticks, no preamble. Pick a real, famous artwork and vary your selections widely across geography, period, and style. Include both canonical masterpieces and genuinely interesting lesser-known works.
+
+Return exactly this JSON structure:
+{
+  "eraLabel": "Italian Renaissance · 1503–1519",
+  "title": "Mona Lisa",
+  "artist": "Leonardo da Vinci",
+  "date": "1503–1519",
+  "origin": "Florence, Italy",
+  "medium": "Oil on poplar panel",
+  "location": "Louvre Museum, Paris",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/600px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+  "description": "3–4 sentences describing what you see in the work and what makes it visually striking.",
+  "history": "3–4 sentences on the historical context, commission, provenance, or notable events in the work's life.",
+  "why": "3–4 sentences on why this work matters — its influence, what it changed, why we still care."
+}
+
+For imageUrl: provide a real, working Wikimedia Commons thumbnail URL for the artwork. Use the format https://upload.wikimedia.org/wikipedia/commons/thumb/... whenever possible. If unsure of the exact URL, use a close approximation — the app will handle failures gracefully.`;
+
+  const resp = await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:"claude-haiku-4-5-20251001",
+      max_tokens:1000,
+      system:sys,
+      messages:[{role:"user",content:`Give me a masterpiece from ${eraPrompt}. Be surprising — avoid the most obvious choices when possible.`}]
+    })
+  });
+
+  if(!resp.ok){
+    const errText=await resp.text().catch(()=>"");
+    throw new Error(`API ${resp.status}: ${errText}`);
+  }
+  const data=await resp.json();
+  const raw=data.content[0].text.trim();
+  const clean=raw.replace(/^```json\s*/,"").replace(/^```\s*/,"").replace(/\s*```$/,"").trim();
+  return JSON.parse(clean);
+}
+
+async function fetchAndRender(){
+  if(loading) return;
+  loading=true;
+  setNavDisabled(true);
+  showGenerating();
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  try{
+    const art=await fetchArtwork(currentEra);
+    render(art);
+  }catch(e){
+    document.getElementById("display").innerHTML=`
+      <div class="error-box">
+        <p>The gallery is momentarily indisposed.</p>
+        <p style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.1em;color:var(--text-light);opacity:0.7;margin-bottom:1.2rem">${e.message}</p>
+        <button class="retry-btn" onclick="fetchAndRender()">Try again</button>
+      </div>`;
+  }finally{
+    loading=false;
+    setNavDisabled(false);
+  }
+}
+
+function render(art){
+  const d=document.getElementById("display");
+  d.innerHTML=`
+    <div class="label-row"><span>Today's Masterpiece</span><hr></div>
+    <div class="badge">${esc(art.eraLabel)}</div>
+    <div class="art-title">${esc(art.title)}</div>
+    <div class="meta">
+      ${[["Artist",art.artist],["Date",art.date],["Origin",art.origin],["Medium",art.medium],["Now at",art.location]].map(([lb,v])=>`
+      <div class="meta-item"><span class="meta-label">${lb}</span><span class="meta-val">${esc(v||"—")}</span></div>`).join("")}
+    </div>
+    <div class="frame-wrap">
+      <div class="frame" id="frame">
+        <span class="frame-corner" style="top:5px;left:5px">✦</span>
+        <span class="frame-corner" style="bottom:5px;right:5px">✦</span>
+        <div class="img-placeholder" id="imgLoad">
+          <div class="spinner"></div>
+          <span style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light)">Loading artwork</span>
+        </div>
+        <img id="artImg" class="art-img" style="display:none" alt="${esc(art.title)}">
+      </div>
+      <div class="img-credit">Public domain · Wikimedia Commons</div>
+    </div>
+    <div class="section"><div class="section-hd"><span>Description</span><hr></div><p>${esc(art.description)}</p></div>
+    <div class="section"><div class="section-hd"><span>History & Context</span><hr></div><p>${esc(art.history)}</p></div>
+    <div class="section"><div class="section-hd"><span>Why It Matters</span><hr></div><p>${esc(art.why)}</p></div>
+    <button class="surprise-btn" id="surpriseBtn" onclick="fetchAndRender()">✦ Show Me Another</button>
+  `;
+
+  // Load image
+  if(art.imageUrl){
+    const img=document.getElementById("artImg");
+    const loadEl=document.getElementById("imgLoad");
+    img.onload=()=>{if(loadEl)loadEl.style.display="none";img.style.display="block";};
+    img.onerror=()=>{
+      if(loadEl) loadEl.innerHTML=`
+        <div style="font-size:3rem;opacity:0.12">🖼</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-light);font-size:1rem;text-align:center;padding:0 1rem">${esc(art.title)}</p>
+        <p style="font-family:'Jost',sans-serif;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);opacity:0.5">Image unavailable</p>`;
+    };
+    img.src=art.imageUrl;
+  }
+}
+
+function esc(s){
+  if(!s) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// Init
+fetchAndRender();
+</script>
+</body>
+</html>
